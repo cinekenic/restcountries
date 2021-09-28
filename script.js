@@ -1,4 +1,6 @@
 const allCountysKey = "Countries";
+const sevenDays = 604800000;
+const time = new Date().getTime();
 
 function dataFromFetch() {
   fetch(
@@ -7,8 +9,8 @@ function dataFromFetch() {
     .then((res) => res.json())
     .then((res) => {
       const data = res;
-      // console.log(res);
       localStorage.setItem(allCountysKey, JSON.stringify(data));
+      localStorage.setItem("lastTime", JSON.stringify(new Date().getTime(res)));
     });
 }
 
@@ -19,3 +21,13 @@ function checkExistDataFromFetch() {
 }
 
 checkExistDataFromFetch();
+
+function getTime() {
+  let newTime = time - localStorage.lastTime;
+  if (newTime > sevenDays) {
+    console.log("data download after seven days");
+    dataFromFetch();
+  }
+}
+
+getTime();
