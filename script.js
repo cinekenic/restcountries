@@ -4,7 +4,31 @@ const lastTime = "lastTime";
 const sevenDays = 604800000;
 const time = new Date().getTime();
 
-let resFilter;
+function filterCountries(countries) {
+  console.log(
+    countries
+      .filter(
+        (el) =>
+          el.regionalBlocs &&
+          el.regionalBlocs[0].name.includes("European Union")
+      )
+      .filter((el) => !el.name.includes("a"))
+      .sort((a, b) => {
+        a.population - b.population;
+      })
+      .reverse()
+  );
+}
+
+function comparison(data, prevData) {
+  console.log("func comparison is runing");
+  const ids = prevData.map((e) => e.population);
+  let filtered = data.filter((e) => !ids.includes(e.population));
+  for (let el of filtered) {
+    console.log(el.name);
+  }
+}
+
 function dataFromFetch() {
   fetch(urlApi)
     .then((res) => res.json())
@@ -15,15 +39,9 @@ function dataFromFetch() {
 
       const prevData = JSON.parse(localStorage.getItem(allCountysKey));
       localStorage.setItem(lastTime, JSON.stringify(new Date().getTime()));
-      function comparison() {
-        console.log("func comparison is runing");
-        const ids = prevData.map((e) => e.population);
-        let filtered = data.filter((e) => !ids.includes(e.population));
-        for (let el of filtered) {
-          console.log(el.name);
-        }
-      }
-      comparison();
+
+      comparison(data, prevData);
+      filterCountries(data);
     });
 }
 
@@ -36,7 +54,7 @@ function checkExistDataFromFetch() {
 checkExistDataFromFetch();
 
 function downladAfterSevenDays() {
-  let newTime = time - localStorage.lastTime;
+  let newTime = time - localStorage.getItem("lastTime");
   if (newTime > sevenDays) {
     console.log("data download after seven days");
     dataFromFetch();
