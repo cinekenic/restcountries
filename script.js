@@ -14,9 +14,22 @@ function filterCountries(countries) {
         )
     )
     .filter((el) => !el.name.includes("a"))
-    .sort((a, b) => a.population - b.population)
+    .sort((a, b) => a.population / a.area - b.population / b.area)
     .reverse();
+  countries.pop();
   console.log(countries);
+  const nnn = [];
+  countries.forEach(function (a) {
+    nnn.push(a.population);
+  });
+  nnn.reduce((a, b) => a + b, 0) > 500000000
+    ? console.log(
+        "Zsumowana populacja pięciu najgęściej zaludnionych państw uzyskanych z wcześniejszych operacji jest większa od 500 milionów"
+      )
+    : console.log(
+        "Zsumowana populacja pięciu najgęściej zaludnionych państw uzyskanych z wcześniejszych operacji nie jest większa od 500 milionów"
+      );
+  console.log(nnn.reduce((a, b) => a + b, 0));
 }
 
 function comparison(data, prevData) {
