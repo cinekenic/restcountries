@@ -4,25 +4,40 @@ const lastTime = "lastTime";
 const sevenDays = 604800000;
 const time = new Date().getTime();
 
-function filterCountries(countries) {
+interface regionalBlocs {
+  name: string;
+}
+
+interface ICountry {
+  name: string;
+  population: number;
+  regionalBlocs: Array<regionalBlocs>;
+  area: number;
+}
+
+function filterCountries(countries: ICountry[]) {
   countries = countries
     .filter(
-      (el) =>
-        el.regionalBlocs &&
-        el.regionalBlocs.find((findEl) =>
+      (el: ICountry): boolean =>
+        el.regionalBlocs !== undefined &&
+        el.regionalBlocs.find((findEl: regionalBlocs) =>
           findEl.name.includes("European Union")
-        )
+        ) !== undefined
     )
-    .filter((el) => !el.name.includes("a"))
-    .sort((a, b) => a.population / a.area - b.population / b.area)
+    .filter((el: ICountry): boolean => !el.name.includes("a"))
+    .sort(
+      (a: ICountry, b: ICountry): number =>
+        a.population / a.area - b.population / b.area
+    )
     .reverse();
+
   countries.pop();
-  console.log(countries);
-  const populationArray = [];
-  countries.forEach(function (a) {
-    populationArray.push(a.population);
-  });
-  populationArray.reduce((a, b) => a + b, 0) > 500000000
+
+  const populationArray: Array<number> = countries.map(
+    (el: ICountry): number => el.population
+  );
+
+  populationArray.reduce((a: number, b: number): number => a + b, 0) > 500000000
     ? console.log(
         "Zsumowana populacja pięciu najgęściej zaludnionych państw uzyskanych z wcześniejszych operacji jest większa od 500 milionów"
       )
@@ -30,12 +45,17 @@ function filterCountries(countries) {
         "Zsumowana populacja pięciu najgęściej zaludnionych państw uzyskanych z wcześniejszych operacji nie jest większa od 500 milionów"
       );
   console.log(populationArray.reduce((a, b) => a + b, 0));
+
+  console.log(countries);
 }
 
-function comparison(data, prevData) {
+function comparison(data: ICountry[], prevData: ICountry[]) {
   console.log("func comparison is running");
-  let filtered = data.filter((el) => {
-    const prevCountryData = prevData.find((prevEl) => prevEl.name === el.name);
+  let filtered = data.filter((el: ICountry) => {
+    const prevCountryData = prevData.find(
+      (prevEl: ICountry) => prevEl.name === el.name
+    )!;
+
     return el.population !== prevCountryData.population;
   });
 
@@ -44,11 +64,11 @@ function comparison(data, prevData) {
   }
 }
 
-function fetchData() {
+function fetchData(): Promise<ICountry[]> | void {
   fetch(urlApi)
     .then((res) => res.json())
-    .then((data) => {
-      const prevData = JSON.parse(localStorage.getItem(allCountrysKey));
+    .then((data: ICountry[]) => {
+      const prevData = JSON.parse(localStorage.getItem(allCountrysKey)!);
 
       localStorage.setItem(allCountrysKey, JSON.stringify(data));
       localStorage.setItem(lastTime, JSON.stringify(new Date().getTime()));
@@ -60,10 +80,10 @@ function fetchData() {
     });
 }
 
-function checkfetchData() {
+function checkfetchData(): void {
   if (
     !localStorage.getItem("Countries") ||
-    time - localStorage.getItem(lastTime) > sevenDays
+    time - Number(localStorage.getItem("lastTime")) > sevenDays
   ) {
     fetchData();
   }
