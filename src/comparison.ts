@@ -1,18 +1,18 @@
-import { ICountry } from "./fetchData";
+import { ICountry } from "./types/types";
 
 export function comparison(
-  data: ICountry[],
-  prevData: ICountry[]
+  newData: ICountry[],
+  prevnewData: ICountry[]
 ): Array<ICountry> {
-  console.log(data);
-  // console.log("comparison", data);
-  return data.filter((el: ICountry) => {
-    const prevCountryData = prevData.find(
+  console.log(newData);
+  // console.log("comparison", newData);
+  return newData.filter((el: ICountry) => {
+    const prevCountrynewData = prevnewData.find(
       (prevEl: ICountry) => prevEl.name === el.name
     )!;
     // console.log(el.population);
-    // console.log(prevCountryData);
-    // console.log(el.population !== prevCountryData.population);
-    return el.population !== prevCountryData.population;
+    // console.log(prevCountrynewData);
+    // console.log(el.population !== prevCountrynewData.population);
+    return el.population !== prevCountrynewData.population;
   });
 }

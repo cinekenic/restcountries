@@ -1,9 +1,5 @@
-import { ICountry } from "./fetchData";
-import { regionalBlocs } from "./fetchData";
-
-interface IAxiosResponse {
-  data: ICountry[];
-}
+import { ICountry, regionalBlocs } from "./types/types";
+import { IAxiosResponse } from "./types/types";
 
 export function filterCountries(data: ICountry[] | IAxiosResponse) {
   let dataToFitler: any = data;

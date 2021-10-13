@@ -1,4 +1,4 @@
-import { ICountry } from "./fetchData";
+import { ICountry } from "./types/types";
 
 export function checkPopulation(countries: Array<ICountry>): boolean {
   countries.pop();

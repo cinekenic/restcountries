@@ -2,9 +2,9 @@ const axios = require("axios");
 
 jest.mock("axios");
 
-import { fetchData } from "../fetchData";
-import { filterCountries } from "../filterCountries";
-import { mockValues } from "../__mock__/mock";
+import { fetchData } from "./fetchData";
+import { filterCountries } from "./filterCountries";
+import { mockValues } from "./__mock__/mock";
 
 interface regionalBlocs {
   acronym: string;

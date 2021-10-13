@@ -1,6 +1,6 @@
 const urlApi = "https://restcountries.com/v2/all";
 const allCountrysKey = "Countries";
-const lastTime = "lastTime";
+const dataCheckLastTime = "dataCheckLastTime";
 const sevenDays = 604800000;
 const time = new Date().getTime();
 
@@ -51,7 +51,10 @@ function fetchData() {
       const prevData = JSON.parse(localStorage.getItem(allCountrysKey));
 
       localStorage.setItem(allCountrysKey, JSON.stringify(data));
-      localStorage.setItem(lastTime, JSON.stringify(new Date().getTime()));
+      localStorage.setItem(
+        dataCheckLastTime,
+        JSON.stringify(new Date().getTime())
+      );
 
       if (prevData) {
         comparison(data, prevData);
@@ -63,7 +66,7 @@ function fetchData() {
 function checkfetchData() {
   if (
     !localStorage.getItem("Countries") ||
-    time - localStorage.getItem(lastTime) > sevenDays
+    time - localStorage.getItem(dataCheckLastTime) > sevenDays
   ) {
     fetchData();
   }

@@ -2,16 +2,16 @@ import { comparison } from "./comparison";
 import { filterCountries } from "./filterCountries";
 import { checkPopulation } from "./checkPopulation";
 
-import { ICountry } from "./fetchData";
+import { ICountry } from "./types/types";
 
 const allCountrysKey = "Countries";
-export const lastTime = "lastTime";
+export const dataCheckLastTime = "dataCheckLastTime";
 
 export function dataToStorage(data: ICountry[]) {
   const prevData: string | null = localStorage.getItem(allCountrysKey);
 
   localStorage.setItem(allCountrysKey, JSON.stringify(data));
-  localStorage.setItem(lastTime, JSON.stringify(new Date().getTime()));
+  localStorage.setItem(dataCheckLastTime, JSON.stringify(new Date().getTime()));
 
   if (prevData !== null) {
     const arrayPrevData: ICountry[] = JSON.parse(prevData);
