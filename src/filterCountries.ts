@@ -9,8 +9,8 @@ export function filterCountries(data: ICountry[] | IAxiosResponse) {
 
   const filtered = dataToFitler
     .filter(
-      (el: ICountry): boolean =>
-        el.regionalBlocs !== undefined &&
+      (el: ICountry) =>
+        el.regionalBlocs &&
         el.regionalBlocs.find((findEl: regionalBlocs) =>
           findEl.acronym.includes("EU")
         ) !== undefined

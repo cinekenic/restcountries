@@ -21,7 +21,7 @@ export const mockForComparison = [
     regionalBlocs: [{ acronym: "EU" }],
   },
   {
-    name: "Poland!!!",
+    name: "Poland",
     population: 37950804,
     area: 312679,
     density: 121.37,
@@ -52,7 +52,7 @@ export const mockForComparison2 = [
     regionalBlocs: [{ acronym: "EU" }],
   },
   {
-    name: "Poland!!!",
+    name: "Poland",
     population: 37950804,
     area: 312679,
     density: 121.37,

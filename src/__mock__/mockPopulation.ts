@@ -1,7 +1,7 @@
 export const mockPopulation = [
   {
     name: "Czech Republic",
-    population: 10698896,
+    population: 10698898,
     area: 78865,
     density: 135.66,
     regionalBlocs: [{ acronym: "EU" }],
