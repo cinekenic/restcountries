@@ -26,15 +26,44 @@ describe("filterCountries", () => {
 
     const dataAfterFilter = filterCountries(data);
     expect(dataAfterFilter.length).toBeLessThan(data.data.length);
-    // expect(dataAfterFilter.every((el) => el.regionalBlocs)).toBeTruthy();
+    expect(
+      dataAfterFilter.every((el: ICountry) => el.regionalBlocs)
+    ).toBeTruthy();
     // expect(
     //   dataAfterFilter.every((el) =>
-    //     el.regionalBlocs.every(
-    //       (elEvery: regionalBlocs) =>
-    //         elEvery.acronym.toLocaleLowerCase().indexOf("a") !== -1
+    //     el.regionalBlocs.every((elEvery: regionalBlocs) =>
+    //       elEvery.acronym.indexOf("EU")
     //     )
     //   )
     // ).toBeTruthy();
+    // console.log(
+    //   dataAfterFilter.map((el: ICountry) =>
+    //     el.regionalBlocs.every(
+    //       (reginalBlockEl) => reginalBlockEl.acronym === "EU"
+    //     )
+    //   )
+    // );
+    // console.log(dataAfterFilter[0]);
+
+    expect(
+      dataAfterFilter.map((el: ICountry) =>
+        el.regionalBlocs.every(
+          (reginalBlockEl) => reginalBlockEl.acronym === "EU"
+        )
+      )
+    ).toBeTruthy();
+
+    expect(
+      dataAfterFilter.filter(
+        (el: ICountry) => !el.name.toLocaleLowerCase().includes("a")
+      )
+    ).toBeTruthy();
+
+    expect(dataAfterFilter[0].name).toEqual("Belgium");
+    expect(
+      dataAfterFilter[0].population / dataAfterFilter[0].area
+    ).toBeGreaterThan(dataAfterFilter[1].population / dataAfterFilter[1].area);
+
     // expect(axios.get).toHaveBeenCalledTimes(1);
     // expect(axios.get).toHaveBeenCalledWith("https://restcountries.com/v2/all");
   });

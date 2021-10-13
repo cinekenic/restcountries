@@ -5,8 +5,13 @@ interface IAxiosResponse {
   data: ICountry[];
 }
 
-export function filterCountries(data: IAxiosResponse) {
-  const filtered = data.data
+export function filterCountries(data: ICountry[] | IAxiosResponse) {
+  let dataToFitler: any = data;
+  if (dataToFitler["data"] !== undefined) {
+    dataToFitler = dataToFitler["data"];
+  }
+
+  const filtered = dataToFitler
     .filter(
       (el: ICountry): boolean =>
         el.regionalBlocs !== undefined &&
@@ -22,6 +27,6 @@ export function filterCountries(data: IAxiosResponse) {
         a.population / a.area - b.population / b.area
     )
     .reverse();
-  // console.log("countries", countries);
+  // console.log("filtered", filtered);
   return filtered;
 }

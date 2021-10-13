@@ -4,14 +4,10 @@ import { checkPopulation } from "./checkPopulation";
 
 import { ICountry } from "./fetchData";
 
-interface IAxiosResponse {
-  data: ICountry[];
-}
-
 const allCountrysKey = "Countries";
 export const lastTime = "lastTime";
 
-export async function dataToStorage(data: ICountry[]) {
+export function dataToStorage(data: ICountry[]) {
   const prevData: string | null = localStorage.getItem(allCountrysKey);
 
   localStorage.setItem(allCountrysKey, JSON.stringify(data));
@@ -28,7 +24,7 @@ export async function dataToStorage(data: ICountry[]) {
 
   const countries: ICountry[] = filterCountries(data);
 
-  if ((await checkPopulation(countries)) === true) {
+  if (checkPopulation(countries) === true) {
     console.log(
       "Zsumowana populacja pięciu najgęściej zaludnionych państw uzyskanych z wcześniejszych operacji jest większa od 500 milionów"
     );

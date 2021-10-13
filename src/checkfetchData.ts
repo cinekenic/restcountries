@@ -5,13 +5,17 @@ const sevenDays = 604800000;
 const time = new Date().getTime();
 
 export async function checkfetchData() {
-  if (
-    !localStorage.getItem("Countries") ||
-    time - Number(localStorage.getItem(lastTime)) > sevenDays
-  ) {
-    const data: ICountry[] = await fetchData();
-    //console.log("checkfetchData", data);
-    dataToStorage(data);
+  if (window !== undefined) {
+    if (
+      !localStorage.getItem("Countries") ||
+      time - Number(localStorage.getItem(lastTime)) > sevenDays
+    ) {
+      let data: any = await fetchData();
+
+      // console.log("checkfetchData", data);
+      console.log("checkfetchData");
+      dataToStorage(data["data"]);
+    }
   }
 
   return true;
